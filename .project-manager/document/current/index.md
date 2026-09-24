@@ -5,9 +5,9 @@ project-manager 为 Codex 项目建立协作规则入口，管理规范与工具
 | 当前可见能力 | 主要入口与依据 | 已知边界 |
 | --- | --- | --- |
 | 初始化项目管理结构 | [初始化脚本](../../../scripts/init_project.py)、[主 skill](../../../SKILL.md) | 创建管理目录并补充规则入口；已有管理块和 skill 文件保留，不自动升级其内容 |
-| 规范与工具分开检索 | [项目入口](../../../AGENTS.md)、[工具目录](../../skill/tools.md) | 规范摘要直接可见，工具按任务查目录；当前没有登记业务规范或自动化工具 |
-| 管理 skill 登记 | [skill-rules](../../skill/skill-rules/SKILL.md) | 已有分类、位置和摘要维护约定；没有自动安装、来源校验或同步实现 |
-| 建立和维护项目文档 | [document-rules](../../skill/document-rules/SKILL.md) | 由 Agent 执行浅层概览、指定功能建档、明确范围内完整整理和局部纠正；初始化脚本不自行读代码或生成项目事实 |
+| 文本规则与 skills 分开加载 | [项目入口](../../../AGENTS.md)、[能力地图](../../skill/index.md) | 入口按领域导航文本规则；规范类与工具类 skills 统一按需检索，已有规则编写规范，尚无业务 skills 或业务领域文本规则 |
+| 管理 skills 与文本规则 | [manage-skills](../../skill/manage-skills/SKILL.md) | Agent 维护 rule/ 文本规则及入口地图；全局 skill 记实际路径，非全局复制后统一登记到能力地图；无批量安装脚本或自动版本同步 |
+| 建立和维护项目文档 | [manage-documents](../../skill/manage-documents/SKILL.md) | 由 Agent 执行浅层概览、指定功能建档、明确范围内完整整理和局部纠正；初始化脚本不自行读代码或生成项目事实 |
 | 分发管理规范 | [模板目录](../../../assets/skills/) | 初始化会复制缺失的规范和引用文件；不会覆盖目标项目已修改的规范 |
 
 ## 尚未深入核对

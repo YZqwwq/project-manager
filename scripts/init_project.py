@@ -30,6 +30,12 @@ def initialize(root):
     (managed / "document").mkdir(parents=True, exist_ok=True)
     # 空文档目录也随 Git 保存；不预设项目目标或生成虚构现状。
     (managed / "document" / ".gitkeep").touch(exist_ok=True)
+    (managed / "rule").mkdir(parents=True, exist_ok=True)
+    (managed / "rule" / ".gitkeep").touch(exist_ok=True)
+    rule_guide = managed / "rule" / "README.md"
+    if not rule_guide.exists():
+        rule_guide.write_bytes((ASSETS / "rules" / "README.md").read_bytes())
+        print(f"创建：{rule_guide}")
     skill_dir = managed / "skill"
     skill_dir.mkdir(parents=True, exist_ok=True)
     for source in sorted((ASSETS / "skills").rglob("*")):
@@ -46,8 +52,8 @@ def initialize(root):
         add_block(root / "AGENTS.override.md", entry)
     add_block(root / "agent.md", f"{BEGIN}\n## 实际项目管理入口\n\nCodex 协作规则见根目录 `AGENTS.md`（若有 `AGENTS.override.md` 则以其为实际入口）。管理目录为 `.project-manager/`。本文件原有预览内容仅供讨论，不作为已登记的 skills 或实际路径。\n{END}")
     print(f"初始化完成：{root}")
-    if (skill_dir / "index.md").exists():
-        print("发现旧 index.md：已保留。请按 skill-rules 将规范登记到 AGENTS.md、工具登记到 tools.md；初始化不会自动迁移或覆盖已有条目。")
+    if (skill_dir / "tools.md").exists():
+        print("发现旧 tools.md：已保留。请按 manage-skills 合并旧规范摘要与工具到 skill/index.md，并按需迁移文本规则到 rule/；初始化不自动迁移已有内容。")
 
 
 if __name__ == "__main__":

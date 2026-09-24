@@ -1,3 +1,7 @@
+# 历史讨论记录
+
+当前设计以 `../../AGENTS.md` 和 `../skill/manage-skills/SKILL.md` 为准：轻量文本规则存入 rule/ 按领域加载与退出；所有 skills 在 skill/index.md 中统一按需检索。以下保留历史讨论，不作为当前规则执行。
+
 # 项目规则入口应包含什么
 
 ## 定位

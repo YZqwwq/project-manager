@@ -13,18 +13,19 @@ python3 scripts/init_project.py /目标项目根目录
 
 ```text
 .project-manager/
+├── rule/                       # 轻量文本规则及编写规范
 ├── document/
 └── skill/
-    ├── tools.md
-    ├── document-rules/SKILL.md
-    └── skill-rules/SKILL.md
+    ├── index.md
+    ├── manage-documents/SKILL.md
+    └── manage-skills/SKILL.md
 ```
 
 `AGENTS.md` 是 Codex 的实际规则入口；存在 `AGENTS.override.md` 时也向其补充管理块。`agent.md` 保留为项目约定入口并指向实际规则。当前会话需读取新增入口，后续由 Codex 在启动时发现项目指令。
 
-根目录 `SKILL.md` 定义 project-manager 初始化能力，`assets/` 提供分发模板。规范类 skills 的摘要直接写入 `AGENTS.md`，根据当前任务匹配后读取全文；按需工具只登记在 `.project-manager/skill/tools.md`，需要自动化能力时才检索目录。
+根目录 `SKILL.md` 定义 project-manager 初始化能力，`assets/` 提供分发模板。`AGENTS.md` 只保留文本规则地图、加载约定和能力地图入口。文本规则保存在 `rule/`；规范类与工具类 skills 统一登记在 `skill/index.md`，都按任务需要读取使用。
 
-`skill-rules` 已提供基础分类与登记约定，自动安装、校验和同步流程尚未实现；`document-rules` 已提供由 Agent 执行的文档建立与维护流程。初始化脚本只建立结构，不分析源码或生成项目事实。
+`manage-skills` 已提供由 Agent 执行的分类、复制接入、路径登记与维护流程，尚未提供批量安装脚本、来源可信性校验或自动版本同步；`manage-documents` 已提供由 Agent 执行的文档建立与维护流程。初始化脚本只建立结构，不分析源码或生成项目事实。
 
 初始化会保留已有管理块和 skills，不自动升级已接入项目的规则。已有项目调整结构时，需按 skill 管理规范同步入口和目录，保留用户登记内容。
 
@@ -38,3 +39,25 @@ python3 scripts/init_project.py /目标项目根目录
 - 日常实现变化或用户纠正：按当前授权同步修订已有相关文档，不顺带为其他功能建档。
 
 文档说明与阅读进度分开：`index.md` 负责导航和覆盖情况，`current/` 保存当前能力和功能知识；目标与计划有明确内容时再建立或沿用现有文件。计划不构成执行授权，阅读待办不属于产品阶段计划。
+
+## Skill 接入方式
+
+所有已登记 skills 最终按路径读取，来源差异在接入时处理：
+
+- 本地全局安装：只登记实际入口的绝对路径，保留全局文件。
+- 非全局文件或文件夹：复制完整能力包到 `.project-manager/skill/<名称>/`，包括必要引用资源，登记项目副本的相对路径。已在统一目录中的 skill 直接登记。
+- 同名不直接覆盖；项目副本独立维护，外部原件变化不自动同步，路径失效不自动换用同名能力。
+
+规范类与工具类 skills 都进入 `skill/index.md`，分类用于判断用途，不决定常驻加载。复制与登记由 Agent 按 `manage-skills` 执行，初始化脚本不扫描、搬运外部 skills。
+
+## 轻量文本规则
+
+`rule/README.md` 提供规则写法及跨层引用规范，创建或审阅规则时按需读取。`rule/` 中的其他规则保存项目偏好、方向约束和参考指引，例如前端设计风格或组件复用偏好，不保存完整专业方案。初始化不自动生成前后端偏好。
+
+`AGENTS.md` 的规则地图列出领域、适用范围与有效期、路径。进入相关工作时读取，已读且未变化、上下文仍可用时沿用；退出领域或有效期结束后停止适用。卸载不是删除文件或物理清除上下文。当前任务补充不自动持久化。
+
+管理文本规则时，从能力地图选择 `manage-skills` 并读取其文本规则管理引用。规则中的参考资料和 skills 按实际需要读取，不因为引用存在就全部加载。
+
+## 首次使用 skill 的收录
+
+用户指定 skill 处理当前项目任务，或 Agent 选定未登记能力时，先按 manage-skills 收录：全局只记录路径，非全局复制完整包并登记后使用副本。仅讨论 skill、浏览目录不收录；用户明确只读或不落盘时优先遵守并说明未登记。收录不等于常驻规范。
